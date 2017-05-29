@@ -1,4 +1,5 @@
 import {FETCHING_DATA,FETCHING_DATA_SUCCESS,FETCHING_DATA_FAILURE} from './constants';
+import people from './api';
 
 export function getData() {
     return {
@@ -15,4 +16,13 @@ export function getDataFailure() {
         type: FETCHING_DATA_FAILURE
     }
 }
-export function fetchData() {}
+export function fetchData() {
+  return (dispatch) => {
+    dispatch(getData())
+    getPeople()
+      .then((data) => {
+        dispatch(getDataSuccess(data))
+      })
+      .catch((err) => console.log('err:', err))
+  }
+}

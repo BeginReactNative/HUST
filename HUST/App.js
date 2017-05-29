@@ -14,9 +14,24 @@ const App = (props) => {
     return (
         <View style={container}>
             <Text style={text}>Redux Example</Text>
-            <TouchableHighlight style={button}>
+            <TouchableHighlight style={button} onPress={(props) => fetchData()}>
                 <Text style={buttonText}>Load data</Text>
             </TouchableHighlight>
+            <View style={mainContent}>
+                {
+                    props.appData.isFetching && <Text>Loading</Text>
+                }
+                {
+                    props.appData.data.length ? (
+                        props.appData.data.map((person, i) => {
+                            return <View key={i} >
+                                <Text>Name: {person.name}</Text>
+                                <Text>Age: {person.age}</Text>
+                            </View>
+                        })
+                    ) : null
+                }
+            </View>
         </View>
     )
 }
@@ -36,17 +51,20 @@ styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white'
-    }
+    },
+     mainContent: {
+    margin: 10,
+  }
 })
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         appData: state.appData
     }
 }
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
     return {
         fetchData: () => dispatch(fetchData())
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
