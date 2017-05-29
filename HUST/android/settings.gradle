@@ -1,0 +1,3 @@
+rootProject.name = 'HUST'
+
+include ':app'
